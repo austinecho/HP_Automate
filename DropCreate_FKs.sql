@@ -123,6 +123,9 @@ FROM #CreateFK
 --==================================================================================================================================================================
 SET @ProcessCount = 1
 
+IF OBJECT_ID('tempdb..#FKOutPut') IS NOT NULL
+    DROP TABLE #FKOutPut;
+
 CREATE TABLE #FKOutPut ( FKOutPut VARCHAR(MAX) );
 
 INSERT INTO #FKOutPut
