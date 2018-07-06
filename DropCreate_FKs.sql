@@ -1,5 +1,9 @@
 DECLARE @TableNameFind VARCHAR(128) = 'RatingDetail'
 
+
+USE RateIQ2 -- Change this
+
+
 IF OBJECT_ID('tempdb..#FKs') IS NOT NULL
     DROP TABLE #FKs;
 
