@@ -78,7 +78,26 @@ SELECT TOP 1 @SchemaName = SchemaName, @TableName = TableName, @ColumnName = Col
 FROM #FKs
 WHERE IsProcessed = 0
 
+IF @SchemaName <> 'dbo' AND @ReferenceSchemaName <> 'dbo'
+BEGIN
 SET @NewFKName = 'FK_' + @SchemaName + '_' + @TableName + '_' + @ReferenceSchemaName + '_' + @ReferenceTableName + '_' + @ReferenceColumnName 
+END
+
+IF @SchemaName = 'dbo' AND @ReferenceSchemaName <> 'dbo'
+BEGIN
+SET @NewFKName = 'FK_' + @TableName + '_' + @ReferenceSchemaName + '_' + @ReferenceTableName + '_' + @ReferenceColumnName 
+END
+
+IF @SchemaName <> 'dbo' AND @ReferenceSchemaName = 'dbo'
+BEGIN
+SET @NewFKName = 'FK_' + @SchemaName + '_' + @TableName + '_' + @ReferenceTableName + '_' + @ReferenceColumnName 
+END
+
+IF @SchemaName = 'dbo' AND @ReferenceSchemaName = 'dbo'
+BEGIN
+SET @NewFKName = 'FK_' + @TableName + '_' + @ReferenceTableName + '_' + @ReferenceColumnName 
+END
+
 
 INSERT INTO #TempFK
         ( OldFK ,
